@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mario Ovalot — Перевозки по Израилю</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#0a0a0a;--white:#fff;--orange:#ff5c00;--gray:#888;--light:#e0e0e0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--white);font-family:'Helvetica Neue',Arial,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button{cursor:pointer;border:none;outline:none}
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,10,10,.85);backdrop-filter:blur(12px)}.logo{font-size:22px;font-weight:800;letter-spacing:2px;color:var(--white)}.nav-links{display:flex;gap:32px;font-size:14px;color:var(--gray)}.nav-links a:hover{color:var(--white)}.nav-cta{background:var(--orange);color:#fff;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:700;transition:opacity .2s}.nav-cta:hover{opacity:.85}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}.hero-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(80px,18vw,220px);font-weight:900;color:rgba(255,255,255,.03);white-space:nowrap;pointer-events:none;letter-spacing:-4px;user-select:none}.hero-content{max-width:700px;z-index:2}.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards}.hero h1{font-size:clamp(52px,8vw,100px);font-weight:900;line-height:1;letter-spacing:-3px;margin-bottom:32px;opacity:0;animation:fadeUp .8s .4s forwards}.word-cycle{display:block;color:var(--orange);overflow:hidden;height:1em;line-height:1}.word-cycle span{display:block;animation:slideWords 6s infinite;white-space:nowrap}.hero-bullets{list-style:none;margin-bottom:40px;opacity:0;animation:fadeUp .8s .8s forwards}.hero-bullets li{font-size:16px;color:var(--light);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px}.hero-bullets li::before{content:"→";color:var(--orange);font-size:18px}.cta-group{display:flex;align-items:center;gap:20px;opacity:0;animation:fadeUp .8s 1s forwards}.btn-main{background:var(--orange);color:#fff;padding:16px 40px;font-size:16px;font-weight:800;border-radius:4px;letter-spacing:1px;transition:transform .2s,opacity .2s}.btn-main:hover{transform:translateY(-2px);opacity:.9}.friction{font-size:13px;color:var(--gray)}.hero-float{position:absolute;right:48px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px;z-index:2;opacity:0;animation:fadeLeft .8s .6s forwards}.float-card{width:220px;height:160px;border-radius:12px;overflow:hidden;position:relative;background:#1a1a1a;border:1px solid rgba(255,255,255,.08)}.float-card img{width:100%;height:100%;object-fit:cover;opacity:.7}.float-card-label{position:absolute;bottom:10px;left:10px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:rgba(0,0,0,.6);padding:4px 8px;border-radius:3px}.float-card:nth-child(2){margin-left:40px}
+/* STARS */
+.star{position:absolute;width:20px;height:20px;opacity:.4}.star::before,.star::after{content:"";position:absolute;background:var(--white)}.star::before{width:2px;height:20px;left:9px;top:0}.star::after{width:20px;height:2px;top:9px;left:0}
+/* SECTIONS COMMON */
+section{padding:100px 48px}.section-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:16px}.section-title{font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:48px}.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:none}
+/* LEAD */
+.lead{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.lead-stats{display:flex;gap:48px;margin-bottom:40px}.stat{}.stat-num{font-size:clamp(40px,6vw,72px);font-weight:900;color:var(--orange)}.stat-label{font-size:13px;color:var(--gray);letter-spacing:2px;text-transform:uppercase}.lead-text p{font-size:18px;line-height:1.7;color:var(--light);margin-bottom:20px}.lead-img{position:relative;height:480px;background:transparent}.lead-img img{width:100%;height:100%;object-fit:cover;opacity:.8}
+/* PROOF */
+.proof-bg{background:#0f0f0f}.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px}.review-card{background:#151515;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:28px}.review-stars{color:var(--orange);font-size:18px;margin-bottom:12px}.review-text{font-size:15px;line-height:1.6;color:var(--light);margin-bottom:16px}.review-author{font-size:13px;color:var(--gray)}.media-row{display:flex;gap:32px;align-items:center;flex-wrap:wrap}.media-badge{border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:8px 20px;font-size:13px;letter-spacing:2px;color:var(--gray)}
+/* BENEFITS */
+.benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:60px}.benefit-item{background:#111;padding:48px 40px;border:1px solid rgba(255,255,255,.04);transition:background .3s}.benefit-item:hover{background:#161616}.benefit-icon{font-size:32px;margin-bottom:16px}.benefit-title{font-size:22px;font-weight:800;margin-bottom:10px}.benefit-desc{font-size:15px;color:var(--gray);line-height:1.6}
+/* DIFFERENTIATORS */
+.diff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}.diff-card{border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:32px 24px;transition:border-color .3s}.diff-card:hover{border-color:var(--orange)}.diff-num{font-size:40px;font-weight:900;color:var(--orange);line-height:1}.diff-title{font-size:17px;font-weight:700;margin:8px 0 6px}.diff-desc{font-size:14px;color:var(--gray);line-height:1.5}
+/* HOW IT WORKS */
+.how-bg{background:#0f0f0f}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:60px;position:relative}.steps::before{content:"";position:absolute;top:32px;left:16%;right:16%;height:1px;background:rgba(255,92,0,.3)}.step{padding:0 32px;text-align:center}.step-num{width:64px;height:64px;border-radius:50%;border:2px solid var(--orange);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:var(--orange);margin:0 auto 24px;background:var(--bg)}.step-title{font-size:20px;font-weight:800;margin-bottom:10px}.step-desc{font-size:14px;color:var(--gray);line-height:1.6}
+/* OFFER */
+.offer-box{background:#111;border:1px solid rgba(255,92,0,.3);border-radius:20px;padding:80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.offer-list{list-style:none;margin:24px 0 40px}.offer-list li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:17px;color:var(--light);display:flex;align-items:center;gap:12px}.offer-list li::before{content:"✓";color:var(--orange);font-weight:900;font-size:18px}.offer-cta-side{text-align:center}.offer-big{font-size:clamp(48px,6vw,80px);font-weight:900;line-height:1;margin-bottom:16px}.offer-sub{font-size:16px;color:var(--gray);margin-bottom:40px;line-height:1.5}
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.about-img{border-radius:16px;overflow:hidden;height:400px;background:#111}.about-img img{width:100%;height:100%;object-fit:cover;opacity:.7}.about-content p{font-size:18px;line-height:1.7;color:var(--light);margin-bottom:24px}.about-tags{display:flex;flex-wrap:wrap;gap:12px}.about-tag{border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 18px;font-size:13px;color:var(--gray)}
+/* AVATARS */
+.avatars-bg{background:#0f0f0f}.avatars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}.avatar-card{background:#151515;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:40px}.avatar-type{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px}.avatar-title{font-size:24px;font-weight:800;margin-bottom:12px}.avatar-desc{font-size:15px;color:var(--gray);line-height:1.6;margin-bottom:20px}.avatar-quote{border-left:2px solid var(--orange);padding-left:16px;font-style:italic;font-size:15px;color:var(--light)}
+/* FAQ */
+.faq-list{margin-top:48px;max-width:800px}.faq-item{border-bottom:1px solid rgba(255,255,255,.08);padding:28px 0;cursor:pointer}.faq-q{font-size:18px;font-weight:700;display:flex;justify-content:space-between;align-items:center}.faq-q::after{content:"+";font-size:24px;color:var(--orange);transition:transform .3s}.faq-item.open .faq-q::after{transform:rotate(45deg)}.faq-a{font-size:15px;color:var(--gray);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .4s,padding .3s}.faq-item.open .faq-a{max-height:200px;padding-top:16px}
+/* FINAL */
+.final{text-align:center;background:linear-gradient(180deg,#0a0a0a 0%,#111 100%)}.final-title{font-size:clamp(48px,7vw,90px);font-weight:900;letter-spacing:-3px;line-height:.95;margin-bottom:32px}.final-bullets{display:flex;justify-content:center;gap:40px;margin:32px 0 48px;flex-wrap:wrap}.final-bullet{font-size:14px;color:var(--light);display:flex;align-items:center;gap:8px}.final-bullet::before{content:"●";color:var(--orange);font-size:8px}
+/* FOOTER */
+footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:40px 48px;display:flex;justify-content:space-between;align-items:center}.footer-logo{font-size:18px;font-weight:800;letter-spacing:2px}.footer-links{display:flex;gap:24px;font-size:13px;color:var(--gray)}.footer-links a:hover{color:var(--white)}.footer-copy{font-size:12px;color:rgba(255,255,255,.2)}
+/* SCROLL BAR */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0a0a0a}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}@keyframes fadeLeft{from{opacity:0;transform:translate(30px,-50%)}to{opacity:1;transform:translate(0,-50%)}}@keyframes slideWords{0%,18%{transform:translateY(0)}22%,40%{transform:translateY(-100%)}44%,62%{transform:translateY(-200%)}66%,84%{transform:translateY(-300%)}88%,100%{transform:translateY(-400%)}}
+/* RESPONSIVE */
+@media(max-width:900px){.hero-float{display:none}nav{padding:16px 24px}.nav-links{display:none}section{padding:70px 24px}.lead,.about-grid,.offer-box,.lead{grid-template-columns:1fr}.diff-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.reviews-grid{grid-template-columns:1fr}.benefits-grid{grid-template-columns:1fr}.avatars-grid{grid-template-columns:1fr}.final-bullets{flex-direction:column;align-items:center}footer{flex-direction:column;gap:20px;text-align:center}.hero{padding:100px 24px 60px}.word-cycle{height:1em}.lead-img{height:260px}.lead-stats{gap:24px}.offer-box{padding:40px 24px;gap:32px}.diff-grid{grid-template-columns:1fr 1fr}.final-title{letter-spacing:-1px}.btn-main{padding:14px 28px;font-size:14px}}</style></head><body>
+<nav><div class="logo">MARIO OVALOT</div><div class="nav-links"><a href="#about">О нас</a><a href="#how">Как работает</a><a href="#reviews">Отзывы</a><a href="#faq">FAQ</a></div><a href="#offer" class="nav-cta">Заказать переезд</a></nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">ПЕРЕЕЗД</div>
+  <div class="star" style="top:15%;left:8%"></div>
+  <div class="star" style="top:20%;right:44%"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Перевозки по всему Израилю</p>
+    <h1>ВАШ ПЕРЕЕЗД —<br><span class="word-cycle"><span>БЕЗ СТРЕССА.</span><span>В СРОК.</span><span>ПОД КЛЮЧ.</span><span>С ГАРАНТИЕЙ.</span><span>НАДЁЖНО.</span></span></h1>
+    <ul class="hero-bullets">
+      <li>Переезд квартиры или офиса — за 1 день</li>
+      <li>Упаковка, погрузка, сборка мебели включены</li>
+      <li>Работаем по всему Израилю — Тель-Авив, Иерусалим, Хайфа и далее</li>
+      <li>Более 5 000 довольных клиентов</li>
+    </ul>
+    <div class="cta-group">
+      <a href="#offer" class="btn-main">ПОЛУЧИТЬ ЦЕНУ</a>
+      <span class="friction">Бесплатная консультация · Без скрытых доплат</span>
+    </div>
+  </div>
+  <div class="hero-float">
+    <div class="float-card" style="background:linear-gradient(135deg,#1a1a1a,#2a1500)"><div class="float-card-label">ТЕЛЬ-АВИВ → ХАЙФА</div></div>
+    <div class="float-card" style="background:linear-gradient(135deg,#1a1a1a,#001520)"><div class="float-card-label">ПЕРЕЕЗД ПОД КЛЮЧ</div></div>
+    <div class="float-card" style="background:linear-gradient(135deg,#1a1a1a,#150015)"><div class="float-card-label">БЕРЕЖНАЯ УПАКОВКА</div></div>
+  </div>
+</section>
+
+<!-- LEAD -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">О компании</p>
+    <div class="lead">
+      <div>
+        <div class="lead-stats">
+          <div class="stat"><div class="stat-num">5К+</div><div class="stat-label">Переездов</div></div>
+          <div class="stat"><div class="stat-num">9</div><div class="stat-label">Лет опыта</div></div>
+          <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Довольных</div></div>
+        </div>
+        <h2 class="section-title">ПЕРЕЕЗД БЕЗ ГОЛОВНОЙ БОЛИ</h2>
+        <div class="lead-text">
+          <p>Знаем, что переезд — это стресс. Тысячи вещей, тяжёлая мебель, нехватка времени. Именно поэтому Mario Ovalot берёт всё на себя — от первого звонка до последнего ящика на новом месте.</p>
+          <p>Наша команда работает чётко, бережно и в срок. Мы перевозим квартиры, офисы, пианино и антиквариат — по всему Израилю.</p>
+        </div>
+      </div>
+      <div class="lead-img" style="background:transparent;overflow:visible;border:none;position:relative;height:480px">
+        <video id="mario-video" autoplay loop muted playsinline preload="auto"
+          style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0;
+          -webkit-mask-image:linear-gradient(to right,transparent 0%,black 20%,black 70%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 10%,black 80%,transparent 100%);
+          -webkit-mask-composite:destination-in;
+          mask-image:linear-gradient(to right,transparent 0%,black 20%,black 70%,transparent 100%),linear-gradient(to bottom,transparent 0%,black 10%,black 80%,transparent 100%);
+          mask-composite:intersect;">
+          <source src="mario-video.webm" type="video/webm">
+          <source src="mario-video.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof-bg" id="reviews">
+  <div class="reveal">
+    <p class="section-label">Отзывы</p>
+    <h2 class="section-title">ЧТО ГОВОРЯТ КЛИЕНТЫ</h2>
+    <div class="reviews-grid">
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">«Переехали из Тель-Авива в Иерусалим за один день. Всё упаковали, собрали мебель на новом месте. Ни одной царапины!»</p><div class="review-author">— Михаил Р., Иерусалим</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">«Перевозили весь офис — 30 рабочих мест. Ребята работали быстро и профессионально. На следующий день уже работали в новом офисе.»</p><div class="review-author">— Анна К., Тель-Авив</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">«Перевезли пианино и антикварный шкаф без единого повреждения. Спокойно, аккуратно, в срок. Рекомендую всем!»</p><div class="review-author">— Давид Ш., Хайфа</div></div>
+    </div>
+    <div class="media-row">
+      <div class="media-badge">★ 4.9 Google Reviews</div>
+      <div class="media-badge">5 000+ ПЕРЕЕЗДОВ</div>
+      <div class="media-badge">9 ЛЕТ НА РЫНКЕ</div>
+      <div class="media-badge">ЛИЦЕНЗИРОВАННАЯ КОМПАНИЯ</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section>
+  <div class="reveal">
+    <p class="section-label">Что вы получаете</p>
+    <h2 class="section-title">ПЕРЕЕЗД ПОД<br>КЛЮЧ</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item"><div class="benefit-icon">📦</div><div class="benefit-title">Упаковка всего</div><div class="benefit-desc">Профессиональная упаковка вещей, мебели и хрупких предметов. Материалы — в подарок.</div></div>
+      <div class="benefit-item"><div class="benefit-icon">🚛</div><div class="benefit-title">Современный автопарк</div><div class="benefit-desc">Грузовики любого размера — от газели до фуры. Перевезём квартиру или целый офис.</div></div>
+      <div class="benefit-item"><div class="benefit-icon">🔧</div><div class="benefit-title">Сборка мебели</div><div class="benefit-desc">Разберём на старом месте и соберём на новом. Вы просто заходите и живёте.</div></div>
+      <div class="benefit-item"><div class="benefit-icon">📍</div><div class="benefit-title">Весь Израиль</div><div class="benefit-desc">Тель-Авив, Иерусалим, Хайфа, Беэр-Шева, Эйлат и все города между ними.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section style="background:#0f0f0f">
+  <div class="reveal">
+    <p class="section-label">Почему мы</p>
+    <h2 class="section-title">ЧЕМ МЫ<br>ОТЛИЧАЕМСЯ</h2>
+    <div class="diff-grid">
+      <div class="diff-card"><div class="diff-num">01</div><div class="diff-title">Фиксированная цена</div><div class="diff-desc">Никаких сюрпризов в конце. Цена согласована до начала работ.</div></div>
+      <div class="diff-card"><div class="diff-num">02</div><div class="diff-title">Страхование груза</div><div class="diff-desc">Ваши вещи застрахованы на весь путь. Спокойствие гарантировано.</div></div>
+      <div class="diff-card"><div class="diff-num">03</div><div class="diff-title">Команда с опытом</div><div class="diff-desc">Только проверенные сотрудники. 9 лет в бизнесе, тысячи довольных клиентов.</div></div>
+      <div class="diff-card"><div class="diff-num">04</div><div class="diff-title">Работаем 7 дней</div><div class="diff-desc">Переезд в выходные или праздник? Без проблем — работаем без выходных.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-bg" id="how">
+  <div class="reveal">
+    <p class="section-label">Процесс</p>
+    <h2 class="section-title">3 ШАГА<br>ДО НОВОГО ДОМА</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Заявка</div><div class="step-desc">Оставьте заявку онлайн или позвоните. Мы перезвоним в течение 15 минут и уточним детали.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Расчёт и дата</div><div class="step-desc">Получите точную фиксированную цену и выберите удобный день для переезда.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Переезд</div><div class="step-desc">Команда приедет в назначенное время. Упакуем, перевезём, соберём. Вы — в новом доме.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="offer">
+  <div class="reveal">
+    <div class="offer-box">
+      <div>
+        <p class="section-label">Специальное предложение</p>
+        <h2 style="font-size:clamp(36px,4vw,56px);font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:24px">ПЕРЕЕЗД<br>ПОД КЛЮЧ</h2>
+        <ul class="offer-list">
+          <li>Квартиры, офисы, дачи — любой масштаб</li>
+          <li>Упаковка + перевозка + сборка мебели</li>
+          <li>Фиксированная цена — без доплат</li>
+          <li>Страхование груза включено</li>
+          <li>Работаем по всему Израилю</li>
+        </ul>
+        <p style="font-size:13px;color:var(--gray)">✓ Бесплатная консультация · ✓ Ответ за 15 минут</p>
+      </div>
+      <div class="offer-cta-side">
+        <div class="offer-big">ГОТОВЫ<br>ПЕРЕЕХАТЬ?</div>
+        <div class="offer-sub">Оставьте заявку прямо сейчас — и получите расчёт стоимости бесплатно</div>
+        <a href="tel:+972000000000" class="btn-main" style="display:inline-block;margin-bottom:16px;font-size:18px;padding:20px 48px">ПОЛУЧИТЬ ЦЕНУ →</a>
+        <br><span style="font-size:13px;color:var(--gray)">Без обязательств · Без предоплаты</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEAM -->
+<section class="about-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:100px 48px" id="team">
+  <div class="reveal about-content">
+    <p class="section-label">О нас</p>
+    <h2 class="section-title">ВАШИ<br>НАДЁЖНЫЕ<br>ПАРТНЁРЫ</h2>
+    <p style="font-size:18px;line-height:1.7;color:var(--light);margin-bottom:24px">Mario Ovalot — это семейная компания по перевозкам, которая работает в Израиле уже 9 лет. За это время мы помогли более 5 000 семей и компаний переехать без стресса и потерь.</p>
+    <p style="font-size:18px;line-height:1.7;color:var(--light);margin-bottom:32px">Наша команда — это опытные грузчики, аккуратные водители и менеджеры, которые всегда на связи. Мы относимся к вашим вещам как к своим.</p>
+    <div class="about-tags"><span class="about-tag">Лицензированная компания</span><span class="about-tag">Страхование груза</span><span class="about-tag">9 лет опыта</span><span class="about-tag">5000+ клиентов</span></div>
+  </div>
+  <div class="reveal" style="background:linear-gradient(135deg,#1a0800,#0a0a0a);border-radius:16px;height:400px;display:flex;align-items:center;justify-content:center;font-size:100px">🤝</div>
+</section>
+
+<!-- AVATARS -->
+<section class="avatars-bg">
+  <div class="reveal">
+    <p class="section-label">Кому мы помогаем</p>
+    <h2 class="section-title">ДЛЯ КОГО<br>МЫ РАБОТАЕМ</h2>
+    <div class="avatars-grid">
+      <div class="avatar-card"><div class="avatar-type">Частные клиенты</div><div class="avatar-title">Семья, переезжающая в новый дом</div><div class="avatar-desc">Переезд с детьми, питомцами и большим количеством вещей — мы организуем всё за вас.</div><div class="avatar-quote">«Думали, переезд займёт неделю. Mario Ovalot справились за один день!» — Ирина, Тель-Авив</div></div>
+      <div class="avatar-card"><div class="avatar-type">Бизнес</div><div class="avatar-title">Компания, переезжающая в новый офис</div><div class="avatar-desc">Минимальный простой, максимальная организованность. Ваш бизнес продолжает работать.</div><div class="avatar-quote">«Перевезли офис 50+ человек без единого дня простоя. Профессионализм высшего уровня.» — Борис, CEO</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal">
+    <p class="section-label">Вопросы</p>
+    <h2 class="section-title">ЧАСТО<br>СПРАШИВАЮТ</h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Как рассчитывается стоимость переезда?</div><div class="faq-a">Цена зависит от объёма вещей, расстояния и набора услуг. Мы делаем точный расчёт после короткого звонка или осмотра — бесплатно и без обязательств.</div></div>
+      <div class="faq-item"><div class="faq-q">Как быстро вы можете организовать переезд?</div><div class="faq-a">Обычно мы планируем переезд за 1–3 дня. В экстренных случаях — возможно в день обращения. Позвоните нам — найдём решение.</div></div>
+      <div class="faq-item"><div class="faq-q">Работаете ли вы с хрупкими и ценными вещами?</div><div class="faq-a">Да! Пианино, антиквариат, картины, зеркала — всё перевозится с особой упаковкой и страховкой.</div></div>
+      <div class="faq-item"><div class="faq-q">Включена ли упаковка в стоимость?</div><div class="faq-a">Упаковка — это отдельная услуга, которую можно добавить к заказу. Материалы (коробки, плёнка, пупырчатая упаковка) предоставляем мы.</div></div>
+      <div class="faq-item"><div class="faq-q">Перевозите ли вы по всему Израилю?</div><div class="faq-a">Да. Тель-Авив, Иерусалим, Хайфа, Беэр-Шева, Эйлат, Нетания — работаем по всей стране.</div></div>
+      <div class="faq-item"><div class="faq-q">Что если что-то повредится при переезде?</div><div class="faq-a">Все перевозки застрахованы. В маловероятном случае повреждения — компенсация гарантирована по договору.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="reveal">
+    <p class="section-label">Готовы начать?</p>
+    <h2 class="final-title">ПЕРЕЕЗЖАЙТЕ<br>С MARIO OVALOT</h2>
+    <div class="final-bullets">
+      <span class="final-bullet">Фиксированная цена</span>
+      <span class="final-bullet">Работаем 7 дней в неделю</span>
+      <span class="final-bullet">Весь Израиль</span>
+      <span class="final-bullet">5 000+ довольных клиентов</span>
+    </div>
+    <a href="tel:+972000000000" class="btn-main" style="display:inline-block;font-size:20px;padding:22px 56px;margin-bottom:16px">ПОЛУЧИТЬ ЦЕНУ БЕСПЛАТНО →</a>
+    <br><span style="font-size:14px;color:var(--gray)">Ответим в течение 15 минут · Без предоплаты · Без обязательств</span>
+  </div>
+</section>
+
+<footer><div class="footer-logo">MARIO OVALOT</div><div class="footer-links"><a href="#home">Главная</a><a href="#how">Как работает</a><a href="#reviews">Отзывы</a><a href="#faq">FAQ</a></div><div class="footer-copy">© 2026 Mario Ovalot. Перевозки по Израилю.</div></footer>
+
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})},{threshold:0.1});
+reveals.forEach(r=>observer.observe(r));
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body></html>
