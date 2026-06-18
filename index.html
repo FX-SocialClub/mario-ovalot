@@ -573,14 +573,22 @@ nav {
   pointer-events: none; overflow: hidden;
 }
 .team-video video {
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0.35; filter: grayscale(20%) brightness(0.7);
+  width: 100%; height: 100%; object-fit: cover; object-position: center center;
+  opacity: 0.40; filter: grayscale(20%) brightness(0.75);
 }
 .team-video::after {
   content: '';
   position: absolute; inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.55) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%);
+}
+@media (max-width: 900px) {
+  .team-video video {
+    opacity: 0.55;
+    filter: grayscale(10%) brightness(0.8);
+    object-position: center top;
+  }
+  .team { min-height: 600px; }
 }
 .team .container { position: relative; z-index: 1; }
 .team-h2 {
@@ -1005,6 +1013,12 @@ footer {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* Canvas bars — desktop full, mobile half intensity */
+.bars-canvas { opacity: 0.7; }
+@media (max-width: 900px) {
+  .bars-canvas { opacity: 0.35; }
+}
+
 @media (max-width: 1024px) {
   .hero-inner      { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual     { height: 320px; }
@@ -1103,9 +1117,9 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <canvas id="barsCanvas" style="
+  <canvas id="barsCanvas" class="bars-canvas" style="
     position:absolute; inset:0; z-index:0; pointer-events:none;
-    width:100%; height:100%; opacity:0.7;
+    width:100%; height:100%;
   "></canvas>
   <div class="container" style="position:relative;z-index:1;">
     <div class="hero-inner">
@@ -1369,9 +1383,9 @@ footer {
 
 <!-- COMPARISON -->
 <section class="compare" style="position:relative;overflow:hidden;">
-  <canvas id="compareCanvas" style="
+  <canvas id="compareCanvas" class="bars-canvas" style="
     position:absolute; inset:0; z-index:0; pointer-events:none;
-    width:100%; height:100%; opacity:0.45;
+    width:100%; height:100%;
   "></canvas>
   <div class="container" style="position:relative;z-index:1;">
     <div class="section-label rv">Сравнение</div>
@@ -1958,16 +1972,53 @@ document.querySelectorAll('.wizard-tab').forEach((tab, i) => {
 });
 
 /* ---- BARS CANVAS FACTORY ---- */
+/* Shared touch state — one finger position across all canvases */
+const _sharedMouse = { x: -9999, y: -9999 };
+let _touchResetTimer = null;
+
+document.addEventListener('touchstart', e => {
+  clearTimeout(_touchResetTimer);
+  _sharedMouse.x = e.touches[0].clientX;
+  _sharedMouse.y = e.touches[0].clientY + window.scrollY;
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+  _sharedMouse.x = e.touches[0].clientX;
+  _sharedMouse.y = e.touches[0].clientY + window.scrollY;
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+  _touchResetTimer = setTimeout(() => {
+    _sharedMouse.x = -9999;
+    _sharedMouse.y = -9999;
+  }, 1000);
+});
+
 function createBarsCanvas(canvasId, options) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const opts = Object.assign({ barCount: 80, colorNeon: {r:232,g:48,b:58}, colorBase: {r:220,g:160,b:160} }, options);
+  const isMobile = window.innerWidth <= 900;
+  const opts = Object.assign({
+    barCount:  isMobile ? 40 : 80,
+    colorNeon: { r: 232, g: 48,  b: 58  },
+    colorBase: { r: 220, g: 160, b: 160 },
+  }, options);
 
   let W, H, bars = [];
-  let mouse = { x: -9999, y: -9999 };
-  let touchActive = false;
-  let touchResetTimer = null;
+  /* Desktop gets its own local mouse; mobile uses shared touch state */
+  let localMouse = { x: -9999, y: -9999 };
+
+  if (!isMobile) {
+    document.addEventListener('mousemove', e => {
+      localMouse.x = e.clientX;
+      localMouse.y = e.clientY + window.scrollY;
+    });
+  }
+
+  function getMouse() {
+    return isMobile ? _sharedMouse : localMouse;
+  }
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
@@ -1979,55 +2030,22 @@ function createBarsCanvas(canvasId, options) {
   function buildBars() {
     bars = [];
     const spacing = W / opts.barCount;
+    /* mobile bars are shorter */
+    const maxH = isMobile ? 60 : 120;
     for (let i = 0; i < opts.barCount; i++) {
       const x = spacing * i + spacing * 0.5;
       bars.push({
         x,
-        baseH:  20 + Math.random() * 120,
-        h:      20 + Math.random() * 120,
+        baseH:  10 + Math.random() * maxH,
+        h:      10 + Math.random() * maxH,
         phase:  Math.random() * Math.PI * 2,
         speed:  0.4 + Math.random() * 0.6,
-        width:  1 + Math.random() * 1.5,
-        bright: 0.15 + Math.random() * 0.35,
+        width:  isMobile ? 0.8 + Math.random() : 1 + Math.random() * 1.5,
+        bright: 0.12 + Math.random() * 0.25,
         cur:    0,
       });
     }
   }
-
-  /* Mouse tracking — relative to this canvas */
-  document.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-
-  /* Touch tracking — relative to this canvas */
-  canvas.closest('section').addEventListener('touchstart', e => {
-    touchActive = true;
-    clearTimeout(touchResetTimer);
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.touches[0].clientX - rect.left;
-    mouse.y = e.touches[0].clientY - rect.top;
-  }, { passive: true });
-
-  document.addEventListener('touchmove', e => {
-    const rect = canvas.getBoundingClientRect();
-    const tx = e.touches[0].clientX - rect.left;
-    const ty = e.touches[0].clientY - rect.top;
-    /* only update if touch is within the canvas vertical range */
-    if (ty > -200 && ty < H + 200) {
-      mouse.x = tx;
-      mouse.y = ty;
-    }
-  }, { passive: true });
-
-  document.addEventListener('touchend', () => {
-    /* slowly drift mouse off-screen after touch ends */
-    touchResetTimer = setTimeout(() => {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    }, 1200);
-  });
 
   let t = 0;
   function draw() {
@@ -2036,13 +2054,23 @@ function createBarsCanvas(canvasId, options) {
 
     const CN = opts.colorNeon;
     const CB = opts.colorBase;
+    const m  = getMouse();
+
+    /* Convert absolute page mouse to canvas-local coords */
+    const rect     = canvas.getBoundingClientRect();
+    const canvasTop = rect.top + window.scrollY;
+    const mx = m.x - rect.left;
+    const my = m.y - canvasTop;
+
+    /* Height boost: half as much on mobile */
+    const maxBoost = isMobile ? 140 : 320;
 
     bars.forEach(b => {
-      const breath = Math.sin(t * b.speed + b.phase);
-      const dx = Math.abs(b.x - mouse.x);
-      const influence = Math.max(0, 1 - dx / 260);
-      const mouseRelY = Math.max(0, Math.min(1, mouse.y / H));
-      const heightBoost = influence * (0.6 + mouseRelY * 0.4) * 320;
+      const breath    = Math.sin(t * b.speed + b.phase);
+      const dx        = Math.abs(b.x - mx);
+      const influence = Math.max(0, 1 - dx / 200);
+      const mouseRelY = Math.max(0, Math.min(1, my / H));
+      const heightBoost = influence * (0.6 + mouseRelY * 0.4) * maxBoost;
 
       b.cur += (influence - b.cur) * 0.08;
 
@@ -2050,7 +2078,7 @@ function createBarsCanvas(canvasId, options) {
       b.h += (finalH - b.h) * 0.05;
 
       const alpha = b.bright + b.cur * 0.5 + breath * 0.05;
-      const barH  = Math.max(4, b.h);
+      const barH  = Math.max(3, b.h);
       const x     = b.x;
       const y     = H * 0.5;
 
@@ -2070,8 +2098,8 @@ function createBarsCanvas(canvasId, options) {
       ctx.fillRect(x - b.width / 2, y - barH, b.width, barH * 2);
 
       if (b.cur > 0.1) {
-        ctx.shadowBlur  = 12 * b.cur;
-        ctx.shadowColor = `rgba(${CN.r},${CN.g},${CN.b},${b.cur * 0.5})`;
+        ctx.shadowBlur  = 10 * b.cur;
+        ctx.shadowColor = `rgba(${CN.r},${CN.g},${CN.b},${b.cur * 0.4})`;
         ctx.fillRect(x - b.width / 2, y - barH, b.width, barH * 2);
         ctx.shadowBlur  = 0;
         ctx.shadowColor = 'transparent';
@@ -2082,12 +2110,14 @@ function createBarsCanvas(canvasId, options) {
   }
 
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => {
+    resize();
+  });
   draw();
 }
 
 createBarsCanvas('barsCanvas');
-createBarsCanvas('compareCanvas', { barCount: 60 });
+createBarsCanvas('compareCanvas', { barCount: window.innerWidth <= 900 ? 30 : 60 });
 
 /* ---- MOBILE MENU ACTIVE NAV ---- */
 const navLinks = document.querySelectorAll('.nav-links a');
